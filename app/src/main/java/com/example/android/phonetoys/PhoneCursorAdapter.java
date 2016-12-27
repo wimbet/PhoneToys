@@ -1,8 +1,10 @@
 package com.example.android.phonetoys;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.phonetoys.data.PhoneContract.PhoneEntry;
+
+import static android.R.attr.id;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+import static com.example.android.phonetoys.data.PhoneContract.PhoneEntry.COLUMN_PHONE_QUANTITY;
 
 /**
  * {@link PhoneCursorAdapter} is an adapter for a list or grid view
@@ -71,7 +77,7 @@ public class PhoneCursorAdapter extends CursorAdapter {
      *                correct row.
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, final Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
@@ -83,14 +89,35 @@ public class PhoneCursorAdapter extends CursorAdapter {
             public void onClick(View v) {
                 // Perform action on click
                 Log.i(LOG_TAG, "TEST: Sell onClick called");
-                decreaseQuantity();
+
+                //get the Uri for the current phone
+                Uri mCurrentPhoneUri = ContentUris.withAppendedId(PhoneEntry.CONTENT_URI, id);
+
+                // Find the columns of phone attributes that we're interested in
+                int quantityColumnIndex = cursor.getColumnIndex(COLUMN_PHONE_QUANTITY);
+
+                //read the phone attributes from the Cursor for the current phone
+                String phoneQuantity = cursor.getString(quantityColumnIndex);
+
+                //convert the string to an integer
+                int updateQuantiy = Integer.parseInt(phoneQuantity);
+
+                // Defines an object to contain the updated values
+                ContentValues updateValues = new ContentValues();
+                updateValues.put(PhoneEntry.COLUMN_PHONE_QUANTITY, updateQuantiy--);
+
+                //update the phone with the content URI mCurrentPhoneUri and pass in the new
+                //content values. Pass in null for the selection and selection args
+                //because mCurrentPhoneUri will already identify the correct row in the database that
+                // we want to modify.
+                int rowsUpdate = context.getContentResolver().update(mCurrentPhoneUri, updateValues, null, null);
 
             }
         });
 
         // Find the columns of phone attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_PHONE_NAME);
-        int quantityColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_PHONE_QUANTITY);
+        int quantityColumnIndex = cursor.getColumnIndex(COLUMN_PHONE_QUANTITY);
         int priceColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_PHONE_PRICE);
 
         // Read the phone attributes from the Cursor for the current phone
