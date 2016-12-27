@@ -58,18 +58,6 @@ public class PhoneCursorAdapter extends CursorAdapter {
      */
     private void decreaseQuantity() {
 
-//
-//        // Read from input fields
-//        // Use trim to eliminate leading or trailing white space
-//        String quantityString = (getvaluefromdatabase);
-//
-//        // Create a ContentValues object where column names are the keys,
-//        // and phone attributes from the editor are the values.
-//        ContentValues values = new ContentValues();
-//        values.put(PhoneEntry.COLUMN_PHONE_QUANTITY, quantityString);
-//
-//        update(uri, values, selection, selection args);
-
     }
 
     /**
