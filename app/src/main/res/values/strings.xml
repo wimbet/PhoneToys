@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Phone Toys</string>
+    <string name="empty_view_title_text">There is nothing to display...</string>
+    <string name="empty_view_subtitle_text">Get started by adding a phone.</string>
+    <!-- Label for overflow menu option that inserts fake phone data into the app [CHAR LIMIT=20] -->
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+
+    <!-- Label for overflow menu option that deletes all phone data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Phones</string>
+    <string name="editor_activity_label">Add a new phone</string>
+    <string name="phone_detail_activity_label">Phone details</string>
+    <string name="category_overview">Phone details</string>
+    <string name="hint_phone_name">Make and model</string>
+    <string name="hint_phone_quantity">Receive quantity</string>
+    <string name="hint_phone_price">Price in USD</string>
+    <!-- Toast message in editor when new phone has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_phone_successful">Phone saved</string>
+
+    <!-- Toast message in editor when new phone has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_phone_failed">Error with saving phone</string>
+    <!-- Label for editor menu option to save phone and leave editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
+</resources>
