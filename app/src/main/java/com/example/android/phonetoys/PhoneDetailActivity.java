@@ -121,7 +121,7 @@ public class PhoneDetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 // Perform action on click
-                Log.i(LOG_TAG, "TEST: minus onClick called");
+                Log.i(LOG_TAG, "TEST: Minus onClick called");
 
                 //get the Uri for the current phone
                 int itemIdColumnIndex = cursor.getColumnIndex(PhoneEntry._ID);
@@ -152,10 +152,46 @@ public class PhoneDetailActivity extends AppCompatActivity
                     // we want to modify.
                     int rowsUpdate = getContentResolver().update(mCurrentPhoneUri, updateValues, null, null);
                 } else {
-                    //Toast.makeText(context, "Quantity is 0 and can't be reduced.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PhoneDetailActivity.this, "Quantity is 0 and can't be reduced.", Toast.LENGTH_SHORT).show();
                 };
 
             }
+        });
+
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Perform action on click
+                Log.i(LOG_TAG, "TEST: Plus onClick called");
+
+                //get the Uri for the current phone
+                int itemIdColumnIndex = cursor.getColumnIndex(PhoneEntry._ID);
+                final long itemId = cursor.getLong(itemIdColumnIndex);
+                Uri mCurrentPhoneUri = ContentUris.withAppendedId(PhoneEntry.CONTENT_URI, itemId);
+
+                // Find the columns of phone attributes that we're interested in
+                int quantityColumnIndex = cursor.getColumnIndex(COLUMN_PHONE_QUANTITY);
+
+                //read the phone attributes from the Cursor for the current phone
+                String phoneQuantity = cursor.getString(quantityColumnIndex);
+
+                //convert the string to an integer
+                int updateQuantity = Integer.parseInt(phoneQuantity);
+
+
+                //increase the quantity by 1
+                updateQuantity++;
+
+                // Defines an object to contain the updated values
+                ContentValues updateValues = new ContentValues();
+                updateValues.put(PhoneEntry.COLUMN_PHONE_QUANTITY, updateQuantity);
+
+                //update the phone with the content URI mCurrentPhoneUri and pass in the new
+                //content values. Pass in null for the selection and selection args
+                //because mCurrentPhoneUri will already identify the correct row in the database that
+                // we want to modify.
+                int rowsUpdate = getContentResolver().update(mCurrentPhoneUri, updateValues, null, null);
+                };
         });
 
     }
