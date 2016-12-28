@@ -31,9 +31,6 @@ public class PhoneCursorAdapter extends CursorAdapter {
     /** Tag for log messages */
     private static final String LOG_TAG = PhoneCursorAdapter.class.getName();
 
-    /** Identifier for the phone data loader */
-    private static final int EXISTING_PHONE_LOADER = 0;
-
     /**
      * Constructs a new {@link PhoneCursorAdapter}.
      *
@@ -57,13 +54,6 @@ public class PhoneCursorAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         // Inflate a list item view using the layout specified in list_item.xml
         return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
-    }
-
-    /**
-     * Method to decrease the quantity by 1.
-     */
-    private void decreaseQuantity() {
-
     }
 
     /**
