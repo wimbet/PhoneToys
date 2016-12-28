@@ -91,7 +91,9 @@ public class PhoneCursorAdapter extends CursorAdapter {
                 Log.i(LOG_TAG, "TEST: Sell onClick called");
 
                 //get the Uri for the current phone
-                Uri mCurrentPhoneUri = ContentUris.withAppendedId(PhoneEntry.CONTENT_URI, id);
+                int itemIdColumnIndex = cursor.getColumnIndex(PhoneEntry._ID);
+                final long itemId = cursor.getLong(itemIdColumnIndex);
+                Uri mCurrentPhoneUri = ContentUris.withAppendedId(PhoneEntry.CONTENT_URI, itemId);
 
                 // Find the columns of phone attributes that we're interested in
                 int quantityColumnIndex = cursor.getColumnIndex(COLUMN_PHONE_QUANTITY);
