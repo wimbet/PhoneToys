@@ -19,22 +19,29 @@ import org.w3c.dom.Text;
 
 public class PhoneDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    /** Identifier for the pet data loader */
+    /**
+     * Identifier for the pet data loader
+     */
     private static final int PHONE_LOADER = 0;
 
-    /** Content URI for the existing phone) */
+    /**
+     * Content URI for the existing phone)
+     */
     private Uri mCurrentPhoneUri;
 
-    /** Adapter for the ListView */
-    PhoneCursorAdapter mCursorAdapter;
-
-    /** TextView field to display the phone's name */
+    /**
+     * TextView field to display the phone's name
+     */
     private TextView mNameTextView;
 
-    /** TextView field to display the phone's quantity */
+    /**
+     * TextView field to display the phone's quantity
+     */
     private TextView mQuantityTextView;
 
-    /** TextView field to display the phone's price */
+    /**
+     * TextView field to display the phone's price
+     */
     private TextView mPriceTextView;
 
     @Override
@@ -47,19 +54,9 @@ public class PhoneDetailActivity extends AppCompatActivity implements LoaderMana
         mCurrentPhoneUri = intent.getData();
 
         // Find the TextViews which will be populated with the phone data
-        TextView nameTextView = (TextView) findViewById(R.id.display_phone_name);
-        TextView quantityTextView = (TextView) findViewById(R.id.display_phone_quantity);
-        TextView priceTextView = (TextView) findViewById(R.id.display_phone_price);
-
-        //assign the textviews
-        nameTextView = mNameTextView;
-        quantityTextView = mQuantityTextView;
-        priceTextView = mPriceTextView;
-
-        // Setup an Adapter to create a list item for each row of phone data in the Cursor.
-        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
-        mCursorAdapter = new PhoneCursorAdapter(this, null);
-        //nameTextView.setAdapter(mCursorAdapter);
+        mNameTextView = (TextView) findViewById(R.id.display_phone_name);
+        mQuantityTextView = (TextView) findViewById(R.id.display_phone_quantity);
+        mPriceTextView = (TextView) findViewById(R.id.display_phone_price);
 
         // Kick off the loader
         getLoaderManager().initLoader(PHONE_LOADER, null, this);
@@ -73,11 +70,11 @@ public class PhoneDetailActivity extends AppCompatActivity implements LoaderMana
                 PhoneEntry._ID,
                 PhoneEntry.COLUMN_PHONE_NAME,
                 PhoneEntry.COLUMN_PHONE_QUANTITY,
-                PhoneEntry.COLUMN_PHONE_PRICE };
+                PhoneEntry.COLUMN_PHONE_PRICE};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
-                PhoneEntry.CONTENT_URI,   // Provider content URI to query
+                mCurrentPhoneUri,   // Provider content URI to query
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
                 null,                   // No selection arguments
@@ -101,15 +98,14 @@ public class PhoneDetailActivity extends AppCompatActivity implements LoaderMana
 
             // Update the views on the screen with the values from the database
             mNameTextView.setText(name);
-            mQuantityTextView.setText(quantity);
-            mPriceTextView.setText(price);
+            mQuantityTextView.setText(Integer.toString(quantity));
+            mPriceTextView.setText(Integer.toString(price));
         }
 
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        // Callback called when the data needs to be deleted
-        mCursorAdapter.swapCursor(null);
+
     }
 }
