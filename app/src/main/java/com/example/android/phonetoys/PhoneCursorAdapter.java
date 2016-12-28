@@ -101,12 +101,13 @@ public class PhoneCursorAdapter extends CursorAdapter {
                 //read the phone attributes from the Cursor for the current phone
                 String phoneQuantity = cursor.getString(quantityColumnIndex);
 
-                //convert the string to an integer
-                int updateQuantiy = Integer.parseInt(phoneQuantity);
+                //convert the string to an integer and decrease value by 1
+                int updateQuantity = Integer.parseInt(phoneQuantity);
+                updateQuantity--;
 
                 // Defines an object to contain the updated values
                 ContentValues updateValues = new ContentValues();
-                updateValues.put(PhoneEntry.COLUMN_PHONE_QUANTITY, updateQuantiy--);
+                updateValues.put(PhoneEntry.COLUMN_PHONE_QUANTITY, updateQuantity);
 
                 //update the phone with the content URI mCurrentPhoneUri and pass in the new
                 //content values. Pass in null for the selection and selection args
