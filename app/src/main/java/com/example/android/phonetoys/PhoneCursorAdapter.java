@@ -107,19 +107,26 @@ public class PhoneCursorAdapter extends CursorAdapter {
                 //read the phone attributes from the Cursor for the current phone
                 String phoneQuantity = cursor.getString(quantityColumnIndex);
 
-                //convert the string to an integer and decrease value by 1
+                //convert the string to an integer
                 int updateQuantity = Integer.parseInt(phoneQuantity);
-                updateQuantity--;
 
-                // Defines an object to contain the updated values
-                ContentValues updateValues = new ContentValues();
-                updateValues.put(PhoneEntry.COLUMN_PHONE_QUANTITY, updateQuantity);
+                if (updateQuantity > 0) {
 
-                //update the phone with the content URI mCurrentPhoneUri and pass in the new
-                //content values. Pass in null for the selection and selection args
-                //because mCurrentPhoneUri will already identify the correct row in the database that
-                // we want to modify.
-                int rowsUpdate = context.getContentResolver().update(mCurrentPhoneUri, updateValues, null, null);
+                    //decrease the quantity by 1
+                    updateQuantity--;
+
+                    // Defines an object to contain the updated values
+                    ContentValues updateValues = new ContentValues();
+                    updateValues.put(PhoneEntry.COLUMN_PHONE_QUANTITY, updateQuantity);
+
+                    //update the phone with the content URI mCurrentPhoneUri and pass in the new
+                    //content values. Pass in null for the selection and selection args
+                    //because mCurrentPhoneUri will already identify the correct row in the database that
+                    // we want to modify.
+                    int rowsUpdate = context.getContentResolver().update(mCurrentPhoneUri, updateValues, null, null);
+                } else {
+                    Toast.makeText(context, "Quantity is 0 and can't be reduced.", Toast.LENGTH_SHORT).show();
+                };
 
             }
         });
