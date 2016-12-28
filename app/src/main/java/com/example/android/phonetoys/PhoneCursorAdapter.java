@@ -84,11 +84,17 @@ public class PhoneCursorAdapter extends CursorAdapter {
         TextView priceTextView = (TextView) view.findViewById(R.id.price);
         Button sellButton = (Button) view.findViewById(R.id.sell_button);
 
+        //get the position before the button is clicked
+        final int position = cursor.getPosition();
+
         sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Perform action on click
                 Log.i(LOG_TAG, "TEST: Sell onClick called");
+
+                //move the cursor to the correct position
+                cursor.moveToPosition(position);
 
                 //get the Uri for the current phone
                 int itemIdColumnIndex = cursor.getColumnIndex(PhoneEntry._ID);
