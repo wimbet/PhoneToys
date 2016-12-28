@@ -1,6 +1,8 @@
 package com.example.android.phonetoys;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -8,16 +10,25 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.phonetoys.data.PhoneContract.PhoneEntry;
 
 import org.w3c.dom.Text;
 
-public class PhoneDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+import static com.example.android.phonetoys.data.PhoneContract.PhoneEntry.COLUMN_PHONE_QUANTITY;
+
+public class PhoneDetailActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    /** Tag for log messages */
+    private static final String LOG_TAG = PhoneDetailActivity.class.getName();
 
     /**
      * Identifier for the pet data loader
@@ -82,7 +93,7 @@ public class PhoneDetailActivity extends AppCompatActivity implements LoaderMana
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+    public void onLoadFinished(Loader<Cursor> loader, final Cursor cursor) {
         // Proceed with moving to the first row of the cursor and reading data from it
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
@@ -101,6 +112,51 @@ public class PhoneDetailActivity extends AppCompatActivity implements LoaderMana
             mQuantityTextView.setText(Integer.toString(quantity));
             mPriceTextView.setText(Integer.toString(price));
         }
+
+        // Find the buttons which will be clicked on
+        Button minusButton = (Button) findViewById(R.id.minus_button);
+        Button plusButton = (Button) findViewById(R.id.plus_button);
+
+        minusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Perform action on click
+                Log.i(LOG_TAG, "TEST: minus onClick called");
+
+                //get the Uri for the current phone
+                int itemIdColumnIndex = cursor.getColumnIndex(PhoneEntry._ID);
+                final long itemId = cursor.getLong(itemIdColumnIndex);
+                Uri mCurrentPhoneUri = ContentUris.withAppendedId(PhoneEntry.CONTENT_URI, itemId);
+
+                // Find the columns of phone attributes that we're interested in
+                int quantityColumnIndex = cursor.getColumnIndex(COLUMN_PHONE_QUANTITY);
+
+                //read the phone attributes from the Cursor for the current phone
+                String phoneQuantity = cursor.getString(quantityColumnIndex);
+
+                //convert the string to an integer
+                int updateQuantity = Integer.parseInt(phoneQuantity);
+
+                if (updateQuantity > 0) {
+
+                    //decrease the quantity by 1
+                    updateQuantity--;
+
+                    // Defines an object to contain the updated values
+                    ContentValues updateValues = new ContentValues();
+                    updateValues.put(PhoneEntry.COLUMN_PHONE_QUANTITY, updateQuantity);
+
+                    //update the phone with the content URI mCurrentPhoneUri and pass in the new
+                    //content values. Pass in null for the selection and selection args
+                    //because mCurrentPhoneUri will already identify the correct row in the database that
+                    // we want to modify.
+                    int rowsUpdate = getContentResolver().update(mCurrentPhoneUri, updateValues, null, null);
+                } else {
+                    //Toast.makeText(context, "Quantity is 0 and can't be reduced.", Toast.LENGTH_SHORT).show();
+                };
+
+            }
+        });
 
     }
 
