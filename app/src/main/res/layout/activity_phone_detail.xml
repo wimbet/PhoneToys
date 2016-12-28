@@ -44,7 +44,7 @@
             android:text="Quantity:"/>
 
             <TextView
-                android:id="@+id/display_quantity"
+                android:id="@+id/display_phone_quantity"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 style="@style/EditorFieldStyle"/>
 
             <TextView
-                android:id="@+id/display_price"
+                android:id="@+id/display_phone_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/EditorFieldStyle"
