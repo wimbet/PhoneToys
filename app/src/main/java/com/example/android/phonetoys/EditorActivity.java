@@ -96,6 +96,7 @@ public class EditorActivity extends AppCompatActivity implements
         String priceString = mPriceEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
         String contactString = mContactEditText.getText().toString().trim();
+        String pictureString = mPictureText.getText().toString().trim();
 
         // Create a ContentValues object where column names are the keys,
         // and phone attributes from the editor are the values.
@@ -104,6 +105,7 @@ public class EditorActivity extends AppCompatActivity implements
         values.put(PhoneEntry.COLUMN_PHONE_PRICE, priceString);
         values.put(PhoneEntry.COLUMN_PHONE_QUANTITY, quantityString);
         values.put(PhoneEntry.COLUMN_CONTACT_INFO, contactString);
+        values.put(PhoneEntry.COLUMN_PHONE_PICTURE, pictureString);
 
         // This is a NEW phone, so insert a new phone into the provider,
         // returning the content URI for the new phone.
