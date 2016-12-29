@@ -268,6 +268,7 @@ public class PhoneDetailActivity extends AppCompatActivity
 
                 //read the phone attributes from the Cursor for the current phone
                 String phoneContact = cursor.getString(contactColumnIndex);
+                String[] emailTo = {phoneContact};
 
                 //read the phone name to use in subject line
                 String phoneName = cursor.getString(nameColumnIndex);
@@ -275,7 +276,7 @@ public class PhoneDetailActivity extends AppCompatActivity
 
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-                intent.putExtra(Intent.EXTRA_EMAIL, phoneContact);
+                intent.putExtra(Intent.EXTRA_EMAIL, emailTo);
                 intent.putExtra(Intent.EXTRA_SUBJECT, subjectLine);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
