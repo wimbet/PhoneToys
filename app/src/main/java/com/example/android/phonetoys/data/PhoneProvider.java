@@ -155,6 +155,12 @@ public class PhoneProvider extends ContentProvider {
             throw new IllegalArgumentException("Phone requires valid price");
         }
 
+        // Check that the contact is not null
+        String contact = values.getAsString(PhoneEntry.COLUMN_CONTACT_INFO);
+        if (contact == null) {
+            throw new IllegalArgumentException("Supplier requires contact");
+        }
+
         // Get writeable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
@@ -258,6 +264,15 @@ public class PhoneProvider extends ContentProvider {
             Integer price = values.getAsInteger(PhoneEntry.COLUMN_PHONE_PRICE);
             if (price != null && price < 0) {
                 throw new IllegalArgumentException("Phone requires valid price");
+            }
+        }
+
+        // If the {@link PhoneEntry#COLUMN_CONTACT_INFO} key is present,
+        // check that the name value is not null.
+        if (values.containsKey(PhoneEntry.COLUMN_CONTACT_INFO)) {
+            String name = values.getAsString(PhoneEntry.COLUMN_CONTACT_INFO);
+            if (name == null) {
+                throw new IllegalArgumentException("Supplier requires contact");
             }
         }
 

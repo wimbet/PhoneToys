@@ -87,5 +87,12 @@ public final class PhoneContract {
          */
         public final static String COLUMN_PHONE_PRICE = "price";
 
+        /**
+         * Supplier contact.
+         *
+         * Type: TEXT
+         */
+        public final static String COLUMN_CONTACT_INFO = "contact";
+
     }
 }

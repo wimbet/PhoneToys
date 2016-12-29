@@ -57,6 +57,11 @@ public class PhoneDetailActivity extends AppCompatActivity
      */
     private TextView mPriceTextView;
 
+    /**
+     * TextView field to display the supplier's contact
+     */
+    private TextView mContactTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +75,7 @@ public class PhoneDetailActivity extends AppCompatActivity
         mNameTextView = (TextView) findViewById(R.id.display_phone_name);
         mQuantityTextView = (TextView) findViewById(R.id.display_phone_quantity);
         mPriceTextView = (TextView) findViewById(R.id.display_phone_price);
+        mContactTextView = (TextView) findViewById(R.id.display_contact_info);
 
         // Kick off the loader
         getLoaderManager().initLoader(PHONE_LOADER, null, this);
@@ -83,7 +89,8 @@ public class PhoneDetailActivity extends AppCompatActivity
                 PhoneEntry._ID,
                 PhoneEntry.COLUMN_PHONE_NAME,
                 PhoneEntry.COLUMN_PHONE_QUANTITY,
-                PhoneEntry.COLUMN_PHONE_PRICE};
+                PhoneEntry.COLUMN_PHONE_PRICE,
+                PhoneEntry.COLUMN_CONTACT_INFO};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
@@ -103,16 +110,19 @@ public class PhoneDetailActivity extends AppCompatActivity
             int nameColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_PHONE_NAME);
             int quantityColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_PHONE_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_PHONE_PRICE);
+            int contactColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_CONTACT_INFO);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
             int price = cursor.getInt(priceColumnIndex);
+            String contact = cursor.getString(contactColumnIndex);
 
             // Update the views on the screen with the values from the database
             mNameTextView.setText(name);
             mQuantityTextView.setText(Integer.toString(quantity));
             mPriceTextView.setText(Integer.toString(price));
+            mContactTextView.setText(contact);
         }
 
         // Find the buttons which will be clicked on

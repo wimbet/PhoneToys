@@ -39,6 +39,32 @@
                 android:hint="@string/hint_phone_price"
                 android:inputType="number"
                 style="@style/EditorFieldStyle" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@string/supplier_overview"
+            style="@style/CategoryStyle" />
+
+        <!-- Input fields -->
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:paddingLeft="4dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edit_phone_contact"
+                android:hint="@string/hint_phone_contact"
+                android:inputType="textEmailAddress"
+                style="@style/EditorFieldStyle" />
         </LinearLayout>
     </LinearLayout>
 

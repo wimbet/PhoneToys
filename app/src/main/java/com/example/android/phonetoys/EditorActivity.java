@@ -33,6 +33,9 @@ public class EditorActivity extends AppCompatActivity implements
     /** EditText field to enter the phone's quantity */
     private EditText mQuantityEditText;
 
+    /** EditText field to enter the supplier's contact */
+    private EditText mContactEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,7 @@ public class EditorActivity extends AppCompatActivity implements
         mNameEditText = (EditText) findViewById(R.id.edit_phone_name);
         mPriceEditText = (EditText) findViewById(R.id.edit_phone_price);
         mQuantityEditText = (EditText) findViewById(R.id.edit_phone_quantity);
+        mContactEditText = (EditText) findViewById(R.id.edit_phone_contact);
     }
 
     /**
@@ -53,6 +57,7 @@ public class EditorActivity extends AppCompatActivity implements
         String nameString = mNameEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
+        String contactString = mContactEditText.getText().toString().trim();
 
         // Create a ContentValues object where column names are the keys,
         // and phone attributes from the editor are the values.
@@ -60,6 +65,7 @@ public class EditorActivity extends AppCompatActivity implements
         values.put(PhoneEntry.COLUMN_PHONE_NAME, nameString);
         values.put(PhoneEntry.COLUMN_PHONE_PRICE, priceString);
         values.put(PhoneEntry.COLUMN_PHONE_QUANTITY, quantityString);
+        values.put(PhoneEntry.COLUMN_CONTACT_INFO, contactString);
 
         // This is a NEW phone, so insert a new phone into the provider,
         // returning the content URI for the new phone.

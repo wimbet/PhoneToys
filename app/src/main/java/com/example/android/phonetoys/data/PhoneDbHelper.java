@@ -41,7 +41,8 @@ public class PhoneDbHelper extends SQLiteOpenHelper {
                 + PhoneEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + PhoneEntry.COLUMN_PHONE_NAME + " TEXT NOT NULL, "
                 + PhoneEntry.COLUMN_PHONE_QUANTITY + " INTEGER NOT NULL, "
-                + PhoneEntry.COLUMN_PHONE_PRICE + " INTEGER NOT NULL);";
+                + PhoneEntry.COLUMN_PHONE_PRICE + " INTEGER NOT NULL, "
+                + PhoneEntry.COLUMN_CONTACT_INFO + " TEXT NOT NULL);";
 
         // Execute the SQL statement
         db.execSQL(SQL_CREATE_PHONES_TABLE);

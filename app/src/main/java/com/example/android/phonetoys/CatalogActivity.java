@@ -97,6 +97,7 @@ public class CatalogActivity extends AppCompatActivity implements
         values.put(PhoneEntry.COLUMN_PHONE_NAME, "Google Pixel");
         values.put(PhoneEntry.COLUMN_PHONE_QUANTITY, 12);
         values.put(PhoneEntry.COLUMN_PHONE_PRICE, 649);
+        values.put(PhoneEntry.COLUMN_CONTACT_INFO, "wimbet@gmail.com");
 
         // Insert a new row for Pixel phone into the provider using the ContentResolver.
         // Use the {@link PhoneEntry#CONTENT_URI} to indicate that we want to insert
@@ -144,7 +145,8 @@ public class CatalogActivity extends AppCompatActivity implements
                 PhoneEntry._ID,
                 PhoneEntry.COLUMN_PHONE_NAME,
                 PhoneEntry.COLUMN_PHONE_QUANTITY,
-                PhoneEntry.COLUMN_PHONE_PRICE };
+                PhoneEntry.COLUMN_PHONE_PRICE,
+                PhoneEntry.COLUMN_CONTACT_INFO};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
