@@ -54,7 +54,7 @@ public class EditorActivity extends AppCompatActivity implements
     private EditText mContactEditText;
 
     /**  field to enter the picture uri */
-    private Button mPictureText;
+    private TextView mPictureText;
 
     //uri for add picture???
     private Uri mUri;
@@ -83,7 +83,7 @@ public class EditorActivity extends AppCompatActivity implements
         mPriceEditText = (EditText) findViewById(R.id.edit_phone_price);
         mQuantityEditText = (EditText) findViewById(R.id.edit_phone_quantity);
         mContactEditText = (EditText) findViewById(R.id.edit_phone_contact);
-        mPictureText = (Button) findViewById(R.id.add_picture);
+        mPictureText = (TextView) findViewById(R.id.image_uri);
     }
 
     /**
