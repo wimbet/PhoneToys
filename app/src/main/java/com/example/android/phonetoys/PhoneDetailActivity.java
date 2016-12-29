@@ -72,6 +72,8 @@ public class PhoneDetailActivity extends AppCompatActivity
      */
     private ImageView mPictureImageView;
 
+    private TextView mImageUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +139,7 @@ public class PhoneDetailActivity extends AppCompatActivity
             mQuantityTextView.setText(Integer.toString(quantity));
             mPriceTextView.setText(Integer.toString(price));
             mContactTextView.setText(contact);
-            mPictureImageView.setText(picture);
+            mPictureImageView.setImageURI(Uri.parse(picture));
         }
 
         // Find the buttons which will be clicked on
