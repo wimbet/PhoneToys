@@ -94,5 +94,12 @@ public final class PhoneContract {
          */
         public final static String COLUMN_CONTACT_INFO = "contact";
 
+        /**
+         * Picture uri.
+         *
+         * Type: TEXT
+         */
+        public final static String COLUMN_PHONE_PICTURE = "picture";
+
     }
 }

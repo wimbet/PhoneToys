@@ -98,6 +98,7 @@ public class CatalogActivity extends AppCompatActivity implements
         values.put(PhoneEntry.COLUMN_PHONE_QUANTITY, 12);
         values.put(PhoneEntry.COLUMN_PHONE_PRICE, 649);
         values.put(PhoneEntry.COLUMN_CONTACT_INFO, "wimbet@gmail.com");
+        values.put(PhoneEntry.COLUMN_PHONE_PICTURE, "exampleUri");
 
         // Insert a new row for Pixel phone into the provider using the ContentResolver.
         // Use the {@link PhoneEntry#CONTENT_URI} to indicate that we want to insert

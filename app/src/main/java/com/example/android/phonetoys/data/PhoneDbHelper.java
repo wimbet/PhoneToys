@@ -42,7 +42,8 @@ public class PhoneDbHelper extends SQLiteOpenHelper {
                 + PhoneEntry.COLUMN_PHONE_NAME + " TEXT NOT NULL, "
                 + PhoneEntry.COLUMN_PHONE_QUANTITY + " INTEGER NOT NULL, "
                 + PhoneEntry.COLUMN_PHONE_PRICE + " INTEGER NOT NULL, "
-                + PhoneEntry.COLUMN_CONTACT_INFO + " TEXT NOT NULL);";
+                + PhoneEntry.COLUMN_CONTACT_INFO + " TEXT NOT NULL, "
+                + PhoneEntry.COLUMN_PHONE_PICTURE + " TEXT NOT NULL,);";
 
         // Execute the SQL statement
         db.execSQL(SQL_CREATE_PHONES_TABLE);

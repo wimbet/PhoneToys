@@ -1,28 +1,45 @@
 package com.example.android.phonetoys;
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.phonetoys.data.PhoneContract.PhoneEntry;
+
+import org.w3c.dom.Text;
+
+import static com.example.android.phonetoys.R.id.fab;
 
 /**
  * Allows user to create a new phone.
  */
 public class EditorActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
+
+    /** Tag for log messages */
+    private static final String LOG_TAG = EditorActivity.class.getName();
+
+    private static final int PICK_IMAGE_REQUEST = 0;
 
     /** EditText field to enter the phone's name */
     private EditText mNameEditText;
@@ -36,16 +53,37 @@ public class EditorActivity extends AppCompatActivity implements
     /** EditText field to enter the supplier's contact */
     private EditText mContactEditText;
 
+    /**  field to enter the picture uri */
+    private Button mPictureText;
+
+    //uri for add picture???
+    private Uri mUri;
+
+    private TextView mTextView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+
+        mTextView = (TextView) findViewById(R.id.image_uri);
+
+        // Setup picture button for openImageSelector
+        Button pictureButton = (Button) findViewById(R.id.add_picture);
+        pictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openImageSelector();
+            }
+        });
 
         // Find all relevant views that we will need to read user input from
         mNameEditText = (EditText) findViewById(R.id.edit_phone_name);
         mPriceEditText = (EditText) findViewById(R.id.edit_phone_price);
         mQuantityEditText = (EditText) findViewById(R.id.edit_phone_quantity);
         mContactEditText = (EditText) findViewById(R.id.edit_phone_contact);
+        mPictureText = (Button) findViewById(R.id.add_picture);
     }
 
     /**
@@ -105,6 +143,38 @@ public class EditorActivity extends AppCompatActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void openImageSelector() {
+        Intent intent;
+
+        if (Build.VERSION.SDK_INT < 19) {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        } else {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+        }
+
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        // The ACTION_OPEN_DOCUMENT intent was sent with the request code READ_REQUEST_CODE.
+        // If the request code seen here doesn't match, it's the response to some other intent,
+        // and the below code shouldn't run at all.
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            // The document selected by the user won't be returned in the intent.
+            // Instead, a URI to that document will be contained in the return intent
+            // provided to this method as a parameter.  Pull that uri using "resultData.getData()"
+
+                mUri = resultData.getData();
+                Log.i(LOG_TAG, "Uri: " + mUri.toString());
+
+                mTextView.setText(mUri.toString());
+            }
+        }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {

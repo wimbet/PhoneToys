@@ -161,6 +161,12 @@ public class PhoneProvider extends ContentProvider {
             throw new IllegalArgumentException("Supplier requires contact");
         }
 
+        // Check that the picture uri is not null
+        String picture = values.getAsString(PhoneEntry.COLUMN_PHONE_PICTURE);
+        if (picture == null) {
+            throw new IllegalArgumentException("Phone requires picture");
+        }
+
         // Get writeable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
@@ -273,6 +279,15 @@ public class PhoneProvider extends ContentProvider {
             String name = values.getAsString(PhoneEntry.COLUMN_CONTACT_INFO);
             if (name == null) {
                 throw new IllegalArgumentException("Supplier requires contact");
+            }
+        }
+
+        // If the {@link PhoneEntry#COLUMN_PHONE_PICTURE} key is present,
+        // check that the name value is not null.
+        if (values.containsKey(PhoneEntry.COLUMN_PHONE_PICTURE)) {
+            String name = values.getAsString(PhoneEntry.COLUMN_PHONE_PICTURE);
+            if (name == null) {
+                throw new IllegalArgumentException("Phone requires picture");
             }
         }
 
