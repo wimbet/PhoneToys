@@ -2,6 +2,7 @@ package com.example.android.phonetoys;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
@@ -24,6 +25,7 @@ import com.example.android.phonetoys.data.PhoneContract.PhoneEntry;
 
 import org.w3c.dom.Text;
 
+import static com.example.android.phonetoys.data.PhoneContract.PhoneEntry.COLUMN_CONTACT_INFO;
 import static com.example.android.phonetoys.data.PhoneContract.PhoneEntry.COLUMN_PHONE_QUANTITY;
 
 public class PhoneDetailActivity extends AppCompatActivity
@@ -246,6 +248,33 @@ public class PhoneDetailActivity extends AppCompatActivity
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
+        });
+
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Perform action on click
+                Log.i(LOG_TAG, "TEST: Order onClick called");
+
+                //get the Uri for the current phone
+                int itemIdColumnIndex = cursor.getColumnIndex(PhoneEntry._ID);
+                final long itemId = cursor.getLong(itemIdColumnIndex);
+                Uri mCurrentPhoneUri = ContentUris.withAppendedId(PhoneEntry.CONTENT_URI, itemId);
+
+                // Find the columns of phone attributes that we're interested in
+                int contactColumnIndex = cursor.getColumnIndex(COLUMN_CONTACT_INFO);
+
+                //read the phone attributes from the Cursor for the current phone
+                String phoneContact = cursor.getString(contactColumnIndex);
+
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, phoneContact);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Order request");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            };
         });
     }
 
