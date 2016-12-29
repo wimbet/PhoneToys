@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <LinearLayout
@@ -14,21 +15,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="16dp">
 
             <TextView
+                style="@style/EditorFieldStyle"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                style="@style/EditorFieldStyle"
                 android:paddingRight="12dp"
                 android:text="Phone Name:"/>
 
             <TextView
                 android:id="@+id/display_phone_name"
+                style="@style/EditorFieldStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/EditorFieldStyle"
                 android:text="Galaxy S7"/>
 
         </LinearLayout>
@@ -36,19 +37,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="16dp">
 
             <TextView
-                android:text="Price:"
+                style="@style/EditorFieldStyle"
                 android:layout_width="120dp"
-                style="@style/EditorFieldStyle"/>
+                android:text="Price:" />
 
             <TextView
                 android:id="@+id/display_phone_price"
+                style="@style/EditorFieldStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/EditorFieldStyle"
                 android:text="699"/>
 
         </LinearLayout>
@@ -56,19 +57,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="16dp">
 
             <TextView
-                android:text="Supplier contact:"
+                style="@style/EditorFieldStyle"
                 android:layout_width="120dp"
-                style="@style/EditorFieldStyle"/>
+                android:text="Supplier contact:" />
 
             <TextView
                 android:id="@+id/display_contact_info"
+                style="@style/EditorFieldStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/EditorFieldStyle"
                 android:text="999-999-9999"/>
 
         </LinearLayout>
@@ -79,17 +80,17 @@
             android:orientation="horizontal">
 
             <TextView
+                style="@style/EditorFieldStyle"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                style="@style/EditorFieldStyle"
                 android:text="Quantity:"/>
 
             <TextView
                 android:id="@+id/display_phone_quantity"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
                 style="@style/EditorFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="100"/>
 
             <Button
@@ -104,6 +105,11 @@
                 android:layout_height="wrap_content"
                 android:text="+"/>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/display_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

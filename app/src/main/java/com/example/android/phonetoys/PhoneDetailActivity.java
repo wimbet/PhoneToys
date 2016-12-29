@@ -12,11 +12,13 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +67,11 @@ public class PhoneDetailActivity extends AppCompatActivity
      */
     private TextView mContactTextView;
 
+    /**
+     * ImageView field to display the phone's picture
+     */
+    private ImageView mPictureImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +81,12 @@ public class PhoneDetailActivity extends AppCompatActivity
         Intent intent = getIntent();
         mCurrentPhoneUri = intent.getData();
 
-        // Find the TextViews which will be populated with the phone data
+        // Find the views which will be populated with the phone data
         mNameTextView = (TextView) findViewById(R.id.display_phone_name);
         mQuantityTextView = (TextView) findViewById(R.id.display_phone_quantity);
         mPriceTextView = (TextView) findViewById(R.id.display_phone_price);
         mContactTextView = (TextView) findViewById(R.id.display_contact_info);
+        mPictureImageView = (ImageView) findViewById(R.id.display_picture);
 
         // Kick off the loader
         getLoaderManager().initLoader(PHONE_LOADER, null, this);
@@ -93,6 +101,7 @@ public class PhoneDetailActivity extends AppCompatActivity
                 PhoneEntry.COLUMN_PHONE_NAME,
                 PhoneEntry.COLUMN_PHONE_QUANTITY,
                 PhoneEntry.COLUMN_PHONE_PRICE,
+                PhoneEntry.COLUMN_PHONE_PICTURE,
                 PhoneEntry.COLUMN_CONTACT_INFO};
 
         // This loader will execute the ContentProvider's query method on a background thread
@@ -114,18 +123,21 @@ public class PhoneDetailActivity extends AppCompatActivity
             int quantityColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_PHONE_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_PHONE_PRICE);
             int contactColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_CONTACT_INFO);
+            int pictureColumnIndex = cursor.getColumnIndex(PhoneEntry.COLUMN_PHONE_PICTURE);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
             int price = cursor.getInt(priceColumnIndex);
             String contact = cursor.getString(contactColumnIndex);
+            String picture = cursor.getString(pictureColumnIndex);
 
             // Update the views on the screen with the values from the database
             mNameTextView.setText(name);
             mQuantityTextView.setText(Integer.toString(quantity));
             mPriceTextView.setText(Integer.toString(price));
             mContactTextView.setText(contact);
+            mPictureImageView.setText(picture);
         }
 
         // Find the buttons which will be clicked on
