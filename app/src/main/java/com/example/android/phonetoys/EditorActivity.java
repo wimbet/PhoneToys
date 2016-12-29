@@ -137,6 +137,36 @@ public class EditorActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
+                // First validate data...
+                String nameString = mNameEditText.getText().toString().trim();
+                String priceString = mPriceEditText.getText().toString().trim();
+                String quantityString = mQuantityEditText.getText().toString().trim();
+                String pictureString = mPictureText.getText().toString().trim();
+                String contactString = mContactEditText.getText().toString().trim();
+
+                // Are the fields valid?  Then notify user they must enter a value
+                if (TextUtils.isEmpty(nameString)) {
+                    Toast.makeText(this, getString(R.string.name_required),
+                            Toast.LENGTH_SHORT).show();
+                    return false;
+                } else if (TextUtils.isEmpty(priceString)) {
+                    Toast.makeText(this, getString(R.string.price_required),
+                            Toast.LENGTH_SHORT).show();
+                    return false;
+                } else if (TextUtils.isEmpty(quantityString)) {
+                    Toast.makeText(this, getString(R.string.quantity_required),
+                            Toast.LENGTH_SHORT).show();
+                    return false;
+                } else if (TextUtils.isEmpty(pictureString)) {
+                    Toast.makeText(this, getString(R.string.picture_required),
+                            Toast.LENGTH_SHORT).show();
+                    return false;
+                } else if (TextUtils.isEmpty(contactString)) {
+                    Toast.makeText(this, getString(R.string.contact_required),
+                            Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+
                 // Save phone to database
                 savePhone();
                 // Exit activity
