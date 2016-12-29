@@ -1,9 +1,11 @@
 package com.example.android.phonetoys;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -116,6 +118,8 @@ public class PhoneDetailActivity extends AppCompatActivity
         // Find the buttons which will be clicked on
         Button minusButton = (Button) findViewById(R.id.minus_button);
         Button plusButton = (Button) findViewById(R.id.plus_button);
+        Button deleteButton = (Button) findViewById(R.id.delete_button);
+        Button orderButton = (Button) findViewById(R.id.order_button);
 
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +182,6 @@ public class PhoneDetailActivity extends AppCompatActivity
                 //convert the string to an integer
                 int updateQuantity = Integer.parseInt(phoneQuantity);
 
-
                 //increase the quantity by 1
                 updateQuantity++;
 
@@ -194,6 +197,46 @@ public class PhoneDetailActivity extends AppCompatActivity
                 };
         });
 
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Perform action on click
+                Log.i(LOG_TAG, "TEST: Delete onClick called");
+
+                // Create an AlertDialog.Builder and set the message, and click listeners
+                // for the positive and negative buttons on the dialog.
+                AlertDialog.Builder builder = new AlertDialog.Builder(PhoneDetailActivity.this);
+                builder.setMessage(R.string.delete_dialog_msg);
+                builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked the "Delete" button, so delete the pet.
+                        //get the Uri for the current phone
+                        int itemIdColumnIndex = cursor.getColumnIndex(PhoneEntry._ID);
+                        final long itemId = cursor.getLong(itemIdColumnIndex);
+                        Uri mCurrentPhoneUri = ContentUris.withAppendedId(PhoneEntry.CONTENT_URI, itemId);
+
+                        //delete the current phone ID
+                        int rowsDeleted = getContentResolver().delete(mCurrentPhoneUri, null, null);
+
+                        // Close the activity
+                        finish();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked the "Cancel" button, so dismiss the dialog
+                        // and continue editing the pet.
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+                // Create and show the AlertDialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
     }
 
     @Override
